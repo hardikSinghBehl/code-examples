@@ -5,7 +5,7 @@ Codebase demonstrating the implementation of publisher-subscriber pattern using 
 [LocalStack](https://github.com/localstack/localstack) has been used to containerize the multi module maven project for local development. The below commands can be used to start the project
 
 ```bash
-mvn clean package spring-boot:build-image
+./mvnw clean package spring-boot:build-image
 ```
 ```bash
 sudo docker-compose up -d
