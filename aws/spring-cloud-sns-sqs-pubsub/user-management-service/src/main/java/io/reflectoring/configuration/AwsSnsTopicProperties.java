@@ -13,7 +13,7 @@ import lombok.Setter;
 @ConfigurationProperties(prefix = "io.reflectoring.aws.sns")
 public class AwsSnsTopicProperties {
 
-	@NotBlank(message = "SNS topic name must be configured")
-	private String topicName;
+	@NotBlank(message = "SNS topic ARN must be configured")
+	private String topicArn;
 
 }

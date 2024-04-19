@@ -23,10 +23,10 @@ public class UserService {
 	public void create(@NonNull final UserCreationRequestDto userCreationRequest) {
 		// save user record in database
 
-		final var topicName = awsSnsTopicProperties.getTopicName();
+		final var topicArn = awsSnsTopicProperties.getTopicArn();
 		final var payload = convert(userCreationRequest);
-		snsTemplate.convertAndSend(topicName, payload);
-		log.info("Successfully published message to {} topic", topicName);
+		snsTemplate.convertAndSend(topicArn, payload);
+		log.info("Successfully published message to {} topic", topicArn);
 	}
 
 	private UserCreatedEventDto convert(@NonNull final UserCreationRequestDto userCreationRequest) {

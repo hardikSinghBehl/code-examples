@@ -11,4 +11,4 @@ io:
   reflectoring:
     aws:
       sns:
-        topic-name: ${AWS_SNS_TOPIC_NAME}
+        topic-arn: ${AWS_SNS_TOPIC_ARN}

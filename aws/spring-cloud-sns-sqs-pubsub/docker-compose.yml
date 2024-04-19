@@ -27,7 +27,7 @@ services:
       spring.cloud.aws.credentials.access-key: test
       spring.cloud.aws.credentials.secret-key: test
       spring.cloud.aws.sns.region: 'us-east-1'
-      io.reflectoring.aws.sns.topic-name: 'user-account-created'
+      io.reflectoring.aws.sns.topic-arn: 'arn:aws:sns:us-east-1:000000000000:user-account-created'
     networks:
       - reflectoring
 
