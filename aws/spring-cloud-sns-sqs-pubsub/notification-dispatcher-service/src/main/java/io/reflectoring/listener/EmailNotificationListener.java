@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class EmailNotificationListener {
 
-	@SqsListener("${io.reflectoring.aws.sqs.queue-name}")
+	@SqsListener("${io.reflectoring.aws.sqs.queue-arn}")
 	public void listen(@SnsNotificationMessage final UserCreatedEventDto userCreatedEvent) {
 		log.info("Dispatching account creation email to {} on {}", userCreatedEvent.getName(), userCreatedEvent.getEmailId());
 		// business logic to send email
