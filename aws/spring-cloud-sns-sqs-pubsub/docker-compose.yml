@@ -44,7 +44,7 @@ services:
       spring.cloud.aws.credentials.access-key: test
       spring.cloud.aws.credentials.secret-key: test
       spring.cloud.aws.sqs.region: 'us-east-1'
-      io.reflectoring.aws.sqs.queue-arn: 'arn:aws:sqs:us-east-1:000000000000:dispatch-email-notification'
+      io.reflectoring.aws.sqs.queue-url: 'http://sqs.us-east-1.localhost.localstack.cloud:4566/000000000000/dispatch-email-notification'
     networks:
       - reflectoring
 
