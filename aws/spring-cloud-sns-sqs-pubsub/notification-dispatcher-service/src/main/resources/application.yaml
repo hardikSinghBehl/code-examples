@@ -11,4 +11,4 @@ io:
   reflectoring:
     aws:
       sqs:
-        queue-arn: ${AWS_SQS_QUEUE_ARN}
+        queue-url: ${AWS_SQS_QUEUE_URL}
