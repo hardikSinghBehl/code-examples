@@ -15,7 +15,7 @@ import jakarta.validation.Payload;
 @Constraint(validatedBy = SnsTopicExistenceValidator.class)
 public @interface SnsTopicExists {
 
-	String message() default "No SNS topic exists with configured name.";
+	String message() default "No SNS topic exists with configured ARN.";
 
 	Class<?>[] groups() default {};
 
