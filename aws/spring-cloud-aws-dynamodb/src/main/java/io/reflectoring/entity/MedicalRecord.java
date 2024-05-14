@@ -20,8 +20,6 @@ public class MedicalRecord {
 
 	private String treatmentPlan;
 
-	private String attendingPhysicianName;
-
 	@DynamoDbPartitionKey
 	public String getId() {
 		return id;
