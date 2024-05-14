@@ -22,6 +22,7 @@
 	<properties>
 		<java.version>21</java.version>
 		<spring.cloud.version>3.1.1</spring.cloud.version>
+		<modelmapper.version>3.2.0</modelmapper.version>
 	</properties>
 
 	<developers>
@@ -49,11 +50,16 @@
 			<artifactId>spring-cloud-aws-starter-dynamodb</artifactId>
 		</dependency>
 
-		<!-- Devtools dependencies -->
+		<!-- Utility dependencies -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>${modelmapper.version}</version>
 		</dependency>
 
 		<!-- Test dependencies -->
