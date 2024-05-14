@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.record.RecordModule;
 import org.springframework.stereotype.Service;
 
 import io.awspring.cloud.dynamodb.DynamoDbTemplate;
@@ -19,7 +20,7 @@ import software.amazon.awssdk.enhanced.dynamodb.Key;
 public class MedicalRecordService {
 
 	private final DynamoDbTemplate dynamoDbTemplate;
-	private final ModelMapper modelMapper = new ModelMapper();
+	private final ModelMapper modelMapper = new ModelMapper().registerModule(new RecordModule());
 
 	public String create(@NonNull final MedicalRecordCreationDto medicalRecordCreationRequest) {
 		final var medicalRecord = modelMapper.map(medicalRecordCreationRequest, MedicalRecord.class);
