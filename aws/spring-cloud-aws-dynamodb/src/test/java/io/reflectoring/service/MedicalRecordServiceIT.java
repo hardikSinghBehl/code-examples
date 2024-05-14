@@ -1,5 +1,9 @@
 package io.reflectoring.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -9,6 +13,10 @@ import org.testcontainers.containers.localstack.LocalStackContainer.Service;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
+
+import io.reflectoring.dto.MedicalRecordCreationDto;
+import io.reflectoring.exception.InvalidMedicalRecordIdException;
+import net.bytebuddy.utility.RandomString;
 
 @SpringBootTest
 class MedicalRecordServiceIT {
@@ -32,6 +40,31 @@ class MedicalRecordServiceIT {
 		registry.add("spring.cloud.aws.credentials.secret-key", localStackContainer::getSecretKey);
 		registry.add("spring.cloud.aws.dynamodb.region", localStackContainer::getRegion);
 		registry.add("spring.cloud.aws.dynamodb.endpoint", localStackContainer::getEndpoint);
+	}
+	
+	@Test
+	void validateDynamoDbInteractions() {
+		// Prepare medical record creation request
+		var patientName = RandomString.make();
+		var diagnosis = RandomString.make();
+		var treatmentPlan = RandomString.make();
+		var creationRequest = new MedicalRecordCreationDto(patientName, diagnosis, treatmentPlan);
+
+		// Create a new medical record
+		var medicalRecordId = medicalRecordService.create(creationRequest);
+
+		// Retrieve the newly created medical record and assert values
+		var retrievedMedicalRecord = medicalRecordService.retrieve(medicalRecordId);
+		assertThat(retrievedMedicalRecord.getId()).isNotBlank();
+		assertThat(retrievedMedicalRecord.getPatientName()).isEqualTo(patientName);
+		assertThat(retrievedMedicalRecord.getDiagnosis()).isEqualTo(diagnosis);
+		assertThat(retrievedMedicalRecord.getTreatmentPlan()).isEqualTo(treatmentPlan);
+
+		// Delete the medical record
+		medicalRecordService.delete(medicalRecordId);
+
+		// Attempt to retrieve the deleted medical record and assert that exception is thrown
+		assertThrows(InvalidMedicalRecordIdException.class, () -> medicalRecordService.retrieve(medicalRecordId));
 	}
 
 }
