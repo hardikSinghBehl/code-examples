@@ -3,5 +3,8 @@ io:
     aws:
       access-key: ${AWS_ACCESS_KEY}
       secret-key: ${AWS_SECRET_KEY}
-      eventbridge:
-        region: ${AWS_EVENTBRIDGE_REGION}
+      eventbridge-scheduler:
+        region: ${EVENTBRIDGE_SCHEDULER_REGION}
+        target:
+          arn: ${EVENTBRIDGE_SCHEDULER_TARGET_ARN}
+          role-arn: ${EVENTBRIDGE_SCHEDULER_ROLE_ARN}

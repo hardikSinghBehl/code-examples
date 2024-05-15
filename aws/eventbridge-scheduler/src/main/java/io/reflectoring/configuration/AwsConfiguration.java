@@ -20,7 +20,7 @@ public class AwsConfiguration {
 	@Bean
 	public SchedulerClient schedulerClient() {
 		final var credentials = constructCredentials();
-		final var regionName = awsConfigurationProperties.getEventbridge().getRegion();
+		final var regionName = awsConfigurationProperties.getEventbridgeScheduler().getRegion();
 		return SchedulerClient.builder()
 				.region(Region.of(regionName))
 				.credentialsProvider(credentials)

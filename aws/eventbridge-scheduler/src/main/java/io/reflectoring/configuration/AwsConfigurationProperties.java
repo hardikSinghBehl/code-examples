@@ -21,15 +21,31 @@ public class AwsConfigurationProperties {
 	private String secretKey;
 
 	@Valid
-	private Eventbridge eventbridge = new Eventbridge();
+	private EventbridgeScheduler eventbridgeScheduler = new EventbridgeScheduler();
 
 	@Getter
 	@Setter
 	@Validated
-	public class Eventbridge {
+	public class EventbridgeScheduler {
 
-		@NotBlank(message = "AWS eventbridge region must be configured")
+		@NotBlank(message = "Eventbridge scheduler region must be configured")
 		private String region;
+
+		@Valid
+		private Target target = new Target();
+
+		@Getter
+		@Setter
+		@Validated
+		public class Target {
+
+			@NotBlank(message = "Eventbridge scheduler target ARN must be configured")
+			private String arn;
+
+			@NotBlank(message = "Eventbridge scheduler role ARN must be configured")
+			private String roleArn;
+
+		}
 
 	}
 
