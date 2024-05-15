@@ -4,4 +4,4 @@ io:
       access-key: ${AWS_ACCESS_KEY}
       secret-key: ${AWS_SECRET_KEY}
       eventbridge:
-        region: ${AWS_EVENTBRIDGE_BUCKET_NAME}
+        region: ${AWS_EVENTBRIDGE_REGION}
