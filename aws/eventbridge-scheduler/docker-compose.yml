@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+  localstack:
+    container_name: localstack
+    image: localstack/localstack:3.3
+    ports:
+      - 4566:4566
+    environment:
+      - SERVICES=scheduler,sqs
+    volumes:
+      - ./localstack/init-sqs-queue.sh:/etc/localstack/init/ready.d/init-sqs-queue.sh
+    networks:
+      - reflectoring
+
+  backend:
+    container_name: backend-application
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+    - 8080:8080
+    depends_on:
+      - localstack
+    environment:
+      spring.profiles.active: local
+      io.reflectoring.aws.credentials.access-key: test
+      io.reflectoring.aws.credentials.secret-key: test
+      io.reflectoring.aws.eventbridge-scheduler.region: us-east-1
+      io.reflectoring.aws.eventbridge-scheduler.endpoint: 'http://localstack:4566'
+      io.reflectoring.aws.sqs.region: us-east-1
+      io.reflectoring.aws.sqs.endpoint: 'http://localstack:4566'
+      io.reflectoring.aws.eventbridge-scheduler.target.arn: 'arn:aws:sqs:us-east-1:000000000000:user-account-deactivate'
+      io.reflectoring.aws.eventbridge-scheduler.target.role-arn: 'arn:aws:iam::000000000000:role/service-role/test'
+      io.reflectoring.aws.sqs.queue-url: 'http://sqs.us-east-1.localhost.localstack.cloud:4566/000000000000/user-account-deactivate'
+      io.reflectoring.user.account.deactivation-delay: 30s
+    networks:
+      - reflectoring
+
+networks:
+  reflectoring:

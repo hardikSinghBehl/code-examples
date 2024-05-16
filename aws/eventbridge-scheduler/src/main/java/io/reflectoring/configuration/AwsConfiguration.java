@@ -1,9 +1,11 @@
 package io.reflectoring.configuration;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import java.net.URI;
+
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import lombok.RequiredArgsConstructor;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
@@ -20,27 +22,57 @@ public class AwsConfiguration {
 	private final AwsConfigurationProperties awsConfigurationProperties;
 
 	@Bean
-	@ConditionalOnMissingBean
+	@Profile("!test & !local")
 	public SchedulerClient schedulerClient() {
 		final var credentials = constructCredentials();
 		final var regionName = awsConfigurationProperties.getEventbridgeScheduler().getRegion();
+		
 		return SchedulerClient.builder()
 				.region(Region.of(regionName))
 				.credentialsProvider(credentials)
 				.build();
 	}
+	
+	@Bean
+	@Profile("test | local")
+	public SchedulerClient emulatedSchedulerClient() {
+		final var credentials = constructCredentials();
+		final var regionName = awsConfigurationProperties.getEventbridgeScheduler().getRegion();
+		final var endpoint = awsConfigurationProperties.getEventbridgeScheduler().getEndpoint();
+		
+		return SchedulerClient.builder()
+				.region(Region.of(regionName))
+				.endpointOverride(URI.create(endpoint))
+				.credentialsProvider(credentials)
+				.build();
+	}
 
 	@Bean
-	@ConditionalOnMissingBean
+	@Profile("!test & !local")
 	public SqsAsyncClient sqsAsyncClient() {
 		final var credentials = constructCredentials();
 		final var regionName = awsConfigurationProperties.getSqs().getRegion();
+		
 		return SqsAsyncClient.builder()
 				.region(Region.of(regionName))
 				.credentialsProvider(credentials)
 				.build();
 	}
+	
+	@Bean
+	@Profile("test | local")
+	public SqsAsyncClient emulatedSqsAsyncClient() {
+		final var credentials = constructCredentials();
+		final var regionName = awsConfigurationProperties.getSqs().getRegion();
+		final var endpoint = awsConfigurationProperties.getEventbridgeScheduler().getEndpoint();
 
+		return SqsAsyncClient.builder()
+				.region(Region.of(regionName))
+				.endpointOverride(URI.create(endpoint))
+				.credentialsProvider(credentials)
+				.build();
+	}
+	
 	private StaticCredentialsProvider constructCredentials() {
 		final var accessKey = awsConfigurationProperties.getAccessKey();
 		final var secretKey = awsConfigurationProperties.getSecretKey();

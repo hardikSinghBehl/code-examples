@@ -1,6 +1,7 @@
 package io.reflectoring.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.lang.Nullable;
 import org.springframework.validation.annotation.Validated;
 
 import jakarta.validation.Valid;
@@ -34,6 +35,9 @@ public class AwsConfigurationProperties {
 		@NotBlank(message = "Eventbridge scheduler region must be configured")
 		private String region;
 
+		@Nullable
+		private String endpoint;
+
 		@Valid
 		private Target target = new Target();
 
@@ -62,6 +66,9 @@ public class AwsConfigurationProperties {
 
 		@NotBlank(message = "SQS queue URL must be configured")
 		private String queueUrl;
+
+		@Nullable
+		private String endpoint;
 
 	}
 
