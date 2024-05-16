@@ -23,6 +23,9 @@ public class AwsConfigurationProperties {
 	@Valid
 	private EventbridgeScheduler eventbridgeScheduler = new EventbridgeScheduler();
 
+	@Valid
+	private SQS sqs = new SQS();
+
 	@Getter
 	@Setter
 	@Validated
@@ -46,6 +49,19 @@ public class AwsConfigurationProperties {
 			private String roleArn;
 
 		}
+
+	}
+
+	@Getter
+	@Setter
+	@Validated
+	public class SQS {
+
+		@NotBlank(message = "SQS queue region must be configured")
+		private String region;
+
+		@NotBlank(message = "SQS queue URL must be configured")
+		private String queueUrl;
 
 	}
 

@@ -8,6 +8,9 @@ io:
         target:
           arn: ${EVENTBRIDGE_SCHEDULER_TARGET_ARN}
           role-arn: ${EVENTBRIDGE_SCHEDULER_ROLE_ARN}
+      sqs:
+        region: ${AWS_SQS_REGION}
+        queue-url: ${AWS_SQS_QUEUE_URL}
     user:
       account:
-        deactivation-delay: 3m
+        deactivation-delay: ${USER_ACCOUNT_DEACTIVATION_DELAY}

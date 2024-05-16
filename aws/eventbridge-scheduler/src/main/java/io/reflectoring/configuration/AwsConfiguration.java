@@ -9,6 +9,7 @@ import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.scheduler.SchedulerClient;
+import software.amazon.awssdk.services.sqs.SqsAsyncClient;
 
 @Configuration
 @RequiredArgsConstructor
@@ -22,6 +23,16 @@ public class AwsConfiguration {
 		final var credentials = constructCredentials();
 		final var regionName = awsConfigurationProperties.getEventbridgeScheduler().getRegion();
 		return SchedulerClient.builder()
+				.region(Region.of(regionName))
+				.credentialsProvider(credentials)
+				.build();
+	}
+
+	@Bean
+	public SqsAsyncClient sqsAsyncClient() {
+		final var credentials = constructCredentials();
+		final var regionName = awsConfigurationProperties.getSqs().getRegion();
+		return SqsAsyncClient.builder()
 				.region(Region.of(regionName))
 				.credentialsProvider(credentials)
 				.build();

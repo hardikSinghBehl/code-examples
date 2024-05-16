@@ -21,7 +21,8 @@
 
 	<properties>
 		<java.version>21</java.version>
-		<eventbridge.scheduler.version>2.25.50</eventbridge.scheduler.version>
+		<awspring.version>3.1.1</awspring.version>
+		<aws.sdk.version>2.25.50</aws.sdk.version>
 	</properties>
 
 	<developers>
@@ -51,7 +52,12 @@
 		<dependency>
 			<groupId>software.amazon.awssdk</groupId>
 			<artifactId>scheduler</artifactId>
-			<version>${eventbridge.scheduler.version}</version>
+			<version>${aws.sdk.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.awspring.cloud</groupId>
+			<artifactId>spring-cloud-aws-starter-sqs</artifactId>
+			<version>${awspring.version}</version>
 		</dependency>
 
 		<!-- Devtools dependencies -->
