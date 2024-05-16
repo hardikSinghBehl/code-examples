@@ -27,7 +27,7 @@ public class UserAccountService {
 	private final ScheduleExpressionGenerator scheduleExpressionGenerator;
 
 	public void deactivateAccount(@NonNull final AccountDeactivationRequestDto request) {
-		final var scheduleName = scheduleNameGenerator.generateDeactivationScheduleName(request.emailId());
+		final var scheduleName = scheduleNameGenerator.generate(request.emailId());
 
 		final var deactivationDateTime = LocalDateTime.now(ZoneOffset.UTC).plus(userAccountProperties.getDeactivationDelay());
 		final var scheduleExpression = scheduleExpressionGenerator.generate(deactivationDateTime);
@@ -36,7 +36,7 @@ public class UserAccountService {
 	}
 
 	public void cancelAccountDeactivation(@NonNull final CancelAccountDeactivationRequestDto request) {
-		final var scheduleName = scheduleNameGenerator.generateDeactivationScheduleName(request.emailId());
+		final var scheduleName = scheduleNameGenerator.generate(request.emailId());
 		scheduleRegistrar.delete(scheduleName);
 	}
 
