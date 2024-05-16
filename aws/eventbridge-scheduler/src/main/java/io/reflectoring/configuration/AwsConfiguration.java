@@ -1,5 +1,6 @@
 package io.reflectoring.configuration;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +20,7 @@ public class AwsConfiguration {
 	private final AwsConfigurationProperties awsConfigurationProperties;
 
 	@Bean
+	@ConditionalOnMissingBean
 	public SchedulerClient schedulerClient() {
 		final var credentials = constructCredentials();
 		final var regionName = awsConfigurationProperties.getEventbridgeScheduler().getRegion();
@@ -29,6 +31,7 @@ public class AwsConfiguration {
 	}
 
 	@Bean
+	@ConditionalOnMissingBean
 	public SqsAsyncClient sqsAsyncClient() {
 		final var credentials = constructCredentials();
 		final var regionName = awsConfigurationProperties.getSqs().getRegion();
