@@ -8,3 +8,6 @@ io:
         target:
           arn: ${EVENTBRIDGE_SCHEDULER_TARGET_ARN}
           role-arn: ${EVENTBRIDGE_SCHEDULER_ROLE_ARN}
+    user:
+      account:
+        deactivation-delay: 3m
