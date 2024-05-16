@@ -26,7 +26,7 @@ public class UserAccountController {
 		return ResponseEntity.noContent().build();
 	}
 
-	@PutMapping("/deactivate/cancel")
+	@PutMapping(value = "/deactivate/cancel", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Void> cancelAccountDeactivation(@Valid @RequestBody CancelAccountDeactivationRequestDto request) {
 		userAccountService.cancelAccountDeactivation(request);
 		return ResponseEntity.noContent().build();
